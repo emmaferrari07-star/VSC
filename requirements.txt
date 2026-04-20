@@ -3,3 +3,4 @@ pandas
 google-generativeai
 Pillow
 gnews
+openpyxl
