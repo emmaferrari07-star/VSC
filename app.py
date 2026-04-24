@@ -146,10 +146,10 @@ try:
         model = genai.GenerativeModel(scelta)
         print(f"✅ Modello selezionato automaticamente: {scelta}")
     else:
-        model = genai.GenerativeModel('gemini-pro') # Ultima spiaggia
+       model = genai.GenerativeModel('gemini-1.5-flash-8b')
 except Exception as e:
     st.error(f"Errore nella lista modelli: {e}")
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-1.5-flash-8b')
 
 
 
