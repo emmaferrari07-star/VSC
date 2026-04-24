@@ -135,21 +135,16 @@ genai.configure(api_key=api_key)
 
 
 
-# --- 8. CONFIGURAZIONE MODELLO CON AUTO-DIAGNOSI ---
+# --- 8. CONFIGURAZIONE MODELLO (FORZATA) ---
 try:
-    # 1. Elenco di tutti i modelli disponibili per il mio account
-    modelli_disponibili = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
-    
-    if modelli_disponibili:
-        # Puliamo i nomi (spesso arrivano come 'models/gemini-1.5-flash')
-        scelta = modelli_disponibili[0] # Prende il primo della lista (il più compatibile)
-        model = genai.GenerativeModel(scelta)
-        print(f"✅ Modello selezionato automaticamente: {scelta}")
-    else:
-       model = genai.GenerativeModel('gemini-1.5-flash-8b')
+    # Qui decidiamo NOI quale usare, senza chiedere alla lista di Google
+    scelta = 'gemini-1.5-flash-8b' 
+    model = genai.GenerativeModel(scelta)
+    print(f"✅ Modello impostato manualmente: {scelta}")
 except Exception as e:
-    st.error(f"Errore nella lista modelli: {e}")
-    model = genai.GenerativeModel('gemini-1.5-flash-8b')
+    st.error(f"Errore nella configurazione del modello: {e}")
+    # Backup estremo
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
 
 
