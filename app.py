@@ -135,17 +135,22 @@ genai.configure(api_key=api_key)
 
 
 
-# --- 8. CONFIGURAZIONE MODELLO (TENTATIVO DI COMPATIBILITÀ) ---
+# --- 8. CONFIGURAZIONE MODELLO CON AUTO-DIAGNOSI ---
 try:
-    # Proviamo il nome completo ufficiale
-    scelta = 'models/gemini-1.5-flash' 
-    model = genai.GenerativeModel(scelta)
-    # Test rapido per vedere se risponde
-    print(f"✅ Modello inizializzato: {scelta}")
-except Exception:
-    # Se dà ancora 404, torniamo al classico gemini-pro (super stabile)
+    # 1. Elenco di tutti i modelli disponibili per il mio account
+    modelli_disponibili = [m.name for m in genai.list_models() if 'generateContent' in m.supported_generation_methods]
+    
+    if modelli_disponibili:
+        # Puliamo i nomi (spesso arrivano come 'models/gemini-1.5-flash')
+        scelta = modelli_disponibili[0] # Prende il primo della lista (il più compatibile)
+        model = genai.GenerativeModel(scelta)
+        print(f"✅ Modello selezionato automaticamente: {scelta}")
+    else:
+        model = genai.GenerativeModel('gemini-pro') # Ultima spiaggia
+except Exception as e:
+    st.error(f"Errore nella lista modelli: {e}")
     model = genai.GenerativeModel('gemini-pro')
-    st.sidebar.warning("Usando Gemini-Pro (il modello Flash non è al momento disponibile sul tuo account)")
+
 
 
 
