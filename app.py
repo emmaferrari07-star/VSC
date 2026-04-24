@@ -135,16 +135,16 @@ genai.configure(api_key=api_key)
 
 
 
-# --- 8. CONFIGURAZIONE MODELLO (FORZATA) ---
+# --- 8. CONFIGURAZIONE MODELLO (VERSIONE STABILE) ---
 try:
-    # Qui decidiamo NOI quale usare, senza chiedere alla lista di Google
-    scelta = 'gemini-1.5-flash-8b' 
+    # Usiamo il nome standard che funziona ovunque
+    scelta = 'gemini-1.5-flash' 
     model = genai.GenerativeModel(scelta)
-    print(f"✅ Modello impostato manualmente: {scelta}")
+    print(f"✅ Modello caricato: {scelta}")
 except Exception as e:
-    st.error(f"Errore nella configurazione del modello: {e}")
-    # Backup estremo
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    st.error(f"Errore critico: {e}")
+    # Se fallisce anche questo, proviamo il pro originale
+    model = genai.GenerativeModel('gemini-pro')
 
 
 
