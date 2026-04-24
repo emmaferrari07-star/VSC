@@ -130,8 +130,8 @@ if st.sidebar.button("🚀 Aggiorna Notizie Ora"):
 
 # --- 7. CONFIGURAZIONE CHIAVE API DI GOOGLE GEMINI ---
 
-API_KEY = st.secrets["GEMINI_API_KEY"] 
-genai.configure(api_key=API_KEY)
+api_key = st.secrets["GEMINI_API_KEY"]
+genai.configure(api_key=api_key)
 
 
 
